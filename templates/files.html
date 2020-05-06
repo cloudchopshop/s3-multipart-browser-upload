@@ -1,0 +1,55 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}s3 file browser{% endblock %}
+
+
+<div class="navbar navbar-fixed-top">
+{% include 'navbar.html' %}
+</div>
+
+
+{% block content %}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <div class="container">
+    <div class="col-12-xs">
+      <br>
+      <h3>{{ PREFIX }}{{ folder }}</h3>
+      <br>
+    
+       
+      <form class="upload-form" action="/admin/files/upload" method="GET" target="_blank" enctype="multipart/form-data">
+          <button type="submit" class="btn btn-primary">Upload Files</button>
+      </form>
+      <hr>
+      <hr>
+      <table class="table table-striped">
+          <tr>
+              <th>Filename</th>
+              <th>Last Modified</th>
+              <th>Size</th>
+              <th></th>
+          </tr>
+                
+        {% for f in files %}
+        <tr>
+            <td>{{ f.Key }}</td>
+            <td>{{ f.LastModified }}</td>
+            <td>{{ f.Size }}</td>
+            <td class="td-buttons">
+              </form>
+              <form class="udownload-form" action="/admin/files/download" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="key" value="{{ f.Key }}">
+                <button type="submit" class="btn btn-default btn-sm">Download</button>
+              </form>
+            </form>
+            <form class="udownload-form" action="/admin/files/download_url" method="POST" target="_blank" enctype="multipart/form-data">
+              <input type="hidden" name="key" value="{{ f.Key }}">
+              <button type="submit" class="btn btn-default btn-sm">Download URL</button>
+            </form>
+            </td>       
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}Upload Directory Generator{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  {% include 'navbar.html' %}
+  </div>
+{% endblock %}
+
+{% block content %}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> 
+  <div class="container">
+    <div class="container col-md-6" style="margin-top:80px">
+      <form class="form-group" role="form", action="/admin/gen_directory", method="POST">
+        <br><h2 class="form-signin-heading">Generate a location for file uploads</h2>
+        <br><span>Customer/Identifier</span>
+        <input type="text" class="form-control" placeholder="Enter a Value" name="directory">
+        <br><button class="btn btn-primary btn-block btn-sm" type="submit">Generate Upload Directory</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

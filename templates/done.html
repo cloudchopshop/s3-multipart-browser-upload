@@ -1,0 +1,27 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block title %}s3 file browser{% endblock %}
+
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  {% include 'navbar.html' %}
+  </div>
+{% endblock %}
+
+{% block content %}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> 
+  <div class="container">
+    <div class="container-fluid" style="margin-top:80px">
+      <h2>Upload Directory Generated</h2>
+      <br><h4>Provide the following info to your customer:</h4>
+      <p>URL: {{url_root}}</p>
+      <p>Username: {{portal}}</p>
+      <p>Password: {{password}}</p>
+
+      <br><h4>(Admin Link) - You can view uploaded files with this link:</h4>
+      <!---<pre>{{url_root}}files?folder={{portal}}</pre>--->
+      <a href={{url_root}}admin/files?folder={{portal}}>{{url_root}}admin/files?folder={{portal}}</a>
+    </div>
+  </div>
+{% endblock %}

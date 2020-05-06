@@ -1,0 +1,8 @@
+.vscode/
+__pycache__/
+lib/
+scripts/
+venv/
+s3-multipart-browser-upload.zip
+.env
+*.cfg
