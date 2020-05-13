@@ -13,37 +13,63 @@ A bucket must first be configured before using this app.
 
 Recomend using a bucket lifecycle rule to cleanup old files. 
 
-An IAM user with key and secret must be provisioned. 
+A CORS configuration policy is needed, permitting the user uploads
+
+    ```
+    <?xml version="1.0" encoding="UTF-8"?>
+    <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>PUT</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>HEAD</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+    </CORSConfiguration> 
+    ```
+
+An IAM user with key and secret must be provisioned.  
 Create and map a policy that grants the new user access to the new bucket.
 
-Note: The bellow policy grants the IAM account full access to the bucket. 
+Note: The bellow policy grants the IAM account access to the bucket.  
 Example: 
 
+```
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "s3:*",
-      "Resource": [
-         "arn:aws:s3:::bucket_name/*",
-         "arn:aws:s3:::bucket_name"
-        ]
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:AbortMultipartUpload",
+                "s3:ListMultipartUploadParts",
+                "s3:ListBucketMultipartUploads"
+            ],
+            "Resource": [
+                "arn:aws:s3:::{bucketname}/*",
+                "arn:aws:s3:::{bucketname}"
+            ]
+        }
+    ]
 }
+```
 
+Setup .env file for access keys   
+Example:  
+export FLASK_APP=app.py  
+export FLASK_DEBUG=1  
 
-Setup .env file for access keys 
-Example:
-export FLASK_APP=app.py
-export FLASK_DEBUG=1
-
-export S3_BUCKET='your_bucket'
-export S3_KEY='your_key'
-export S3_SECRET_ACCESS_KEY='your_secret'
+export S3_BUCKET='your_bucket'  
+export S3_KEY='your_key'  
+export S3_SECRET_ACCESS_KEY='your_secret'  
+export PREFIX='uploads/'  
+export Cognito_PoolId='your_poolid'  
 
 ## Notes 
-This app is provided as is. 
+This app is provided as is.  
 There is no auth bult into this app, designed to sit behind aws app load balancer hosted with beanstalk, secured with path rules. 
 

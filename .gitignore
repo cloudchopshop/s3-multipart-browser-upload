@@ -6,3 +6,4 @@ venv/
 s3-multipart-browser-upload.zip
 .env
 *.cfg
+overview.vsdx
